@@ -3,15 +3,11 @@ import math
 from time import perf_counter
 
 
-def magnetization_grid(grid, mode):
+def magnetization_grid(grid):
     num_up = sum([x + 1 for x in np.ndarray.flatten(grid)]) / 2
     num_down = math.pow(len(grid), 2) - num_up
     magnetization = num_up - num_down
-    if mode == 'abs':
-        return abs(magnetization)
-    elif mode == 'normal':
-        return magnetization
-    return math.pow(magnetization, 2)
+    return magnetization
 
 
 # wrapper to estimate performance
