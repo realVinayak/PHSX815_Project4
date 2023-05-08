@@ -2,7 +2,7 @@ LATTICE_SIZE = 4
 J = 1
 T_min = 0.1
 T_max = 6
-N_temp_step = 20
+N_temp_step = 10
 THROW_AWAY_COUNT = 7000
 NUM_SAMPLES = 20000
 

@@ -36,7 +36,6 @@ plot_list = [
 def analyze_data():
     with open('ising_data_dump.pkl', 'rb') as f:
         ising_data_dump = np.array(pickle.load(f))
-    print(ising_data_dump.shape)
     ising_data_transpose = np.transpose(ising_data_dump, (1, 0))
 
     analyzer(plot_list[0], ising_data_transpose[0], [-1, 2.5, 1, 1], sigmoid)
@@ -63,7 +62,6 @@ def analyzer(spec, data, initial_guess, model_function):
     objective = generate_function_to_minimize(data, T_range, model_function)
     result = optimize.minimize(objective, np.array(initial_guess)).x
     test_function = model_function(*result)
-    print(result)
     new_t_range = np.linspace(T_min, T_max, 50)
     plt.plot(new_t_range,
              [test_function(data_point) for data_point in new_t_range],
@@ -72,7 +70,9 @@ def analyzer(spec, data, initial_guess, model_function):
                color='blue', linewidth=1, linestyle='dotted')
     plt.legend(['Numerical Values', 'Fitted Values', 'Curie Temperature (T = '
                                                      '2.27)'])
+
     plt.savefig(f'./outputs/{"".join(spec["title"].split(" "))}.png')
+    print(spec['ylabel'], 'is analyzed and plot is generated and saved')
 
 
 def analyze_main():

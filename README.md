@@ -54,7 +54,7 @@ functions:
     2. The spin interaction parameter - `J`. Default value of `J = 1`.
     3. The minimum temperature - `T_min`. Default value of `T_min = 0.1`.
     4. The maximum temperature - `T_max`. Default value of `T_max = 6`.
-    5. The number of temperature samples between `T_min` and `T_max` - `N_temp_step`. Default value of `N_temp_step = 5`.
+    5. The number of temperature samples between `T_min` and `T_max` - `N_temp_step`. Default value of `N_temp_step = 10`.
     6. The number of initial samples to throwaway - `THROW_AWAY_COUNT`. Default value of `THROW_AWAY_COUNT` = 7000.
     7. The number of samples to consider - `NUM_SAMPLES`. Default value of `NUM_SAMPLES = 20000`
   - Generates the set of temperature as `np.linspace(T_min, T_max, N_temp_step)`, and calls `write_ising()` from `ising_model_main.py` which runs Ising Model simulation for each value of
