@@ -1,53 +1,23 @@
+import numpy as np
 import math
 
 
-# Returns log likelihood ratio given callbacks for first probability and
-# second probability and measurement
-def get_log_likelihood_ratio(measurement, get_first_prob, get_second_prob):
-    first_prob = get_first_prob(measurement)
-    second_prob = get_second_prob(measurement)
-    log_likelihood_ratio = math.log(
-        max(first_prob, 10 ** (-50)) / max(second_prob, 10 ** (-50)))
-    return log_likelihood_ratio
+def wrap_mean_squared(data, sample_points, func):
+    predicted_values = np.array([func(sample) for sample in sample_points])
+    diff = data - predicted_values
+    error = math.pow(np.linalg.norm(diff), 2)
+    return error
 
 
-# Returns false negative rate given llr measurements and lambda threshold
-def get_fnr(llr_measurements, lambda_threshold):
-    llr_passed_count = 0
-    for llr in llr_measurements:
-        if llr > lambda_threshold:
-            break
-        llr_passed_count += 1
-    return llr_passed_count / len(llr_measurements)
+def sigmoid(yoffset, xoffset, yscale, xscale):
+    return lambda x: yoffset + (
+                yscale / (1 + math.exp(-1 * xscale * (x - xoffset))))
 
 
-# Takes in the histogram in the form of hist_data and hist_bins. Given a
-# sample, we find the corresponding bin in the histogram's bins (hist_bins).
-# Then, the height for that particular bin is read and returned as the
-# probability. Assumes that hist_data is already normalized.
-def get_probability_from_hist(hist_data, hist_bins, sample):
-    bin_index = 0
-    probability = 0
-    if hist_bins[0] <= sample <= hist_bins[-1]:
-        while bin_index <= len(hist_bins) - 2:
-            if hist_bins[bin_index] <= sample <= hist_bins[bin_index + 1]:
-                break
-            bin_index += 1
-        probability = hist_data[bin_index]
-    return probability
-
-import numpy as np
+def shifted_gaussian(xoffset, yscale, std_dev):
+    return lambda x: (yscale/abs(std_dev))*(math.exp(-1*0.5*(math.pow((x-xoffset)/(std_dev), 2))))
 
 
-# Uses numpy's histogram generator and returns
-# data that can be read efficiently by matplotlib
-# Reason: matplotlib's histogram is slow. numpy's is fast.
-def get_histogram_data(measurements, samples):
-    temp_hist = list(np.histogram(measurements, samples, density=True))
-    temp_hist_probs = list(temp_hist[0])
-    temp_bin_flatten = []
-    past_bin = temp_hist[1][0]
-    for _bin in temp_hist[1][1:]:
-        temp_bin_flatten.append((_bin + past_bin) / 2)
-        past_bin = _bin
-    return temp_hist_probs, temp_bin_flatten
+def generate_function_to_minimize(data, sample_points, model_function):
+    return lambda params: wrap_mean_squared(data, sample_points,
+                                            model_function(*params))

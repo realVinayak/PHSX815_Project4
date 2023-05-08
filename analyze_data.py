@@ -36,6 +36,7 @@ plot_list = [
 def analyze_data():
     with open('ising_data_dump.pkl', 'rb') as f:
         ising_data_dump = np.array(pickle.load(f))
+    print(ising_data_dump.shape)
     ising_data_transpose = np.transpose(ising_data_dump, (1, 0))
 
     analyzer(plot_list[0], ising_data_transpose[0], [-1, 2.5, 1, 1], sigmoid)
