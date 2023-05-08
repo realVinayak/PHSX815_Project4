@@ -3,7 +3,8 @@ import math
 from ising_utils import magnetization_grid, random_lattice_point, \
     maybe_switch_spin, grid_hamiltonian
 import pickle
-from driver import THROW_AWAY_COUNT, J, LATTICE_SIZE, T_max, T_min, N_temp_step, NUM_SAMPLES
+from driver import THROW_AWAY_COUNT, J, LATTICE_SIZE, T_max, T_min, N_temp_step, \
+    NUM_SAMPLES
 
 
 def main_mcmc_loop(grid, steps, BETA):
@@ -16,7 +17,7 @@ def main_mcmc_loop(grid, steps, BETA):
     energy_after_maybe_flip = None
     result_arr = []
     for step_counter in range(1, steps + 1):
-        for metrop in range(int(len(grid)/2)):
+        for metrop in range(int(len(grid) / 2)):
             random_x, random_y = random_lattice_point(grid)
             maybe_switch_spin(grid, random_x, random_y, BETA,
                               energy_after_maybe_flip, J)
@@ -37,7 +38,7 @@ def main_mcmc_loop(grid, steps, BETA):
                            sum_magnetism_squared]]
 
         if step_counter % 5000 == 0:
-            print(result_arr, 'on step:', step_counter, '/', steps)
+            print('on step: ', step_counter, '/', steps, 'temperature: ', 1/BETA)
 
     return result_arr
 

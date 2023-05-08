@@ -64,5 +64,5 @@ functions:
     performs best fit function analysis and saves the resulting plots in `./outputs/`
 
 ### Execution
-To run, type `python3 driv  er.py`. Currently, the lattice size used in code is `4 x 4`. However, the paper uses
+To run, type `python3 driver.py`. Currently, the lattice size used in code is `4 x 4`. However, the paper uses
 `16 x 16` as the lattice size. This is done because the execution times is longer for `16 x 16`.
