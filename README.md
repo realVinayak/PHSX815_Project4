@@ -5,7 +5,7 @@ materials using the Ising Model. The physical properties studied
 in this project are *average energy per spin*, *average absolute magnetism per spin*,
 *average heat capacity per spin* and *average magnetic susceptibility per spin*. Monte Carlo
 Markov Chain method is used to numerically estimate these physical values for 
-a lattice with lattice size = `LATTICE_SIZE` over a range of temperature. Then, 
+a lattice with lattice size = `LATTICE_SIZE x LATTICE_SIZE` over a range of temperature. Then, 
 these values are analyzed for sudden changes near the Curie Temperature which marks the
 phase transition.
 
