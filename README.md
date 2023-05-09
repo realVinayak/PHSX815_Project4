@@ -65,4 +65,6 @@ functions:
 
 ### Execution
 To run, type `python3 driver.py`. Currently, the lattice size used in code is `4 x 4`. However, the paper uses
-`16 x 16` as the lattice size. This is done because the execution times is longer for `16 x 16`.
+`16 x 16` as the lattice size. This is done because the execution times is longer for `16 x 16`. The Ising Model simulation
+is run and four separate plots are created, demonstrating the relationship between each average observable per temperature and 
+the result is stored in `./outputs/`
